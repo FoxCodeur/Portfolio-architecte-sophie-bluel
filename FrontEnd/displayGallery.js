@@ -36,7 +36,7 @@ export const displayGallery = (projects) => {
     figure.append(imageElement, figCaption);
     gallery.append(figure);
   });
-
+  // Affichage du titre de la modale et de la bordure bottom
   if (modalTitleContainer) {
     const modalTitle = document.createElement("h2");
     modalTitle.classList.add("modal-title");
@@ -47,7 +47,7 @@ export const displayGallery = (projects) => {
 
   modalGallery.style.borderBottom = "1px solid black";
 
-  // Ajout du bouton "ajouter une photo"
+  // Ajout du nouveau titre "ajout photo"
   addPhotoButton.addEventListener("click", () => {
     if (modalGallery) {
       modalGallery.innerHTML = "";
@@ -78,11 +78,11 @@ export const displayGallery = (projects) => {
       customButton.addEventListener("click", () => {
         imageInput.click();
       });
-
+      // Lien vers la page d'accueil, sinon href
       homepageEditButton.addEventListener("click", () => {
         window.location.replace("./index.html");
       });
-
+      // traitement de l'input qui permet de charger puis prévisualiser la photo
       imageInput.addEventListener("change", () => {
         if (imageInput.files.length > 0) {
           console.log("Fichier sélectionné :", imageInput.files[0].name);
@@ -142,7 +142,6 @@ export const displayGallery = (projects) => {
         option.textContent = category.name;
         categorySelect.appendChild(option);
       });
-
       // Ajouter la ligne sous le sélecteur de catégorie
       const lineDiv = document.createElement("div");
       lineDiv.style.position = "absolute";
@@ -173,15 +172,22 @@ export const displayGallery = (projects) => {
           return;
         }
         // Vérifiez que la catégorie est valide
+        const missingFields = [];
+        if (!title) {
+          missingFields.push("le titre");
+        }
         if (!categoryId) {
-          console.error("Invalid category value");
-          alert("Veuillez selectionner les trois champs.");
-          return;
+          missingFields.push("la catégorie");
         }
         if (!image) {
-          console.error("Pas d'image selectionnée");
+          missingFields.push("une image");
+        }
+
+        if (missingFields.length > 0) {
           alert(
-            "Veuillez sélectionner une image avant de valider le formulaire."
+            `Veuillez renseigner ${missingFields.join(
+              ", "
+            )} pour valider le formulaire.`
           );
           return;
         }
