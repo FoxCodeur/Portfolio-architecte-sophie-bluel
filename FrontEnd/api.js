@@ -50,5 +50,6 @@ export const fetchArtGalleryData = async () => {
     // l'erreur est capturée et affichée dans la console
     const errorMessage = document.querySelector("#error-message");
     errorMessage.textContent = `Une erreur est survenue: ${error.message}`;
+    console.log("Une erreur est survenue:", error);
   }
 };

@@ -78,9 +78,11 @@ export const displayGallery = (projects) => {
       customButton.addEventListener("click", () => {
         imageInput.click();
       });
+
       homepageEditButton.addEventListener("click", () => {
         window.location.replace("./index.html");
       });
+
       imageInput.addEventListener("change", () => {
         if (imageInput.files.length > 0) {
           console.log("Fichier sélectionné :", imageInput.files[0].name);
@@ -99,13 +101,6 @@ export const displayGallery = (projects) => {
       });
 
       chooseFileDiv.append(customButton, imageInput);
-
-      // Ajouter une image "picture.png" provenant du dossier "assets/icons"
-      const pictureImage = document.createElement("img");
-      pictureImage.src = "./assets/icons/picture.png";
-      pictureImage.alt = "Image de prévisualisation";
-      pictureImage.classList.add("icone-preview");
-      chooseFileDiv.appendChild(pictureImage);
 
       // Paragraphe sous le bouton JPG, PNG : 4 Mo max
       const fileInfoParagraph = document.createElement("p");
@@ -147,6 +142,7 @@ export const displayGallery = (projects) => {
         option.textContent = category.name;
         categorySelect.appendChild(option);
       });
+
       // Ajouter la ligne sous le sélecteur de catégorie
       const lineDiv = document.createElement("div");
       lineDiv.style.position = "absolute";
