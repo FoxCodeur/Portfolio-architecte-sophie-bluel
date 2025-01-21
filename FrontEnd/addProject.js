@@ -4,45 +4,60 @@ const API_URI = "http://localhost:5678/api/works";
 
 // La fonction `addProject` reçoit désormais directement les arguments correspondants
 export const addProject = async (title, categoryId, file) => {
+  // Vérification de la connexion de l'utilisateur
   if (!isConnected()) {
     console.error("Utilisateur non authentifié. Veuillez vous connecter.");
+    alert("Utilisateur non authentifié. Veuillez vous connecter.");
     return;
   }
 
-  if (!title || !categoryId || !file) {
-    console.error(
-      "Données du projet ou fichier manquants. Assurez-vous que 'title', 'category' et 'file' sont renseignés."
+  // Vérification que tous les champs sont renseignés
+  const missingFields = [];
+  if (!title) missingFields.push("le titre");
+  if (!categoryId) missingFields.push("la catégorie");
+  if (!file) missingFields.push("une image");
+
+  if (missingFields.length > 0) {
+    alert(
+      `Veuillez renseigner ${missingFields.join(
+        ", "
+      )} pour valider le formulaire.`
     );
     return;
   }
 
+  // Validation du fichier image
   if (!(file instanceof File)) {
-    console.error(
+    alert(
       "Le fichier fourni n'est pas valide. Veuillez sélectionner une image."
     );
     return;
   }
 
+  // Vérification du type de fichier (JPEG ou PNG)
   if (!["image/jpeg", "image/png"].includes(file.type)) {
-    console.error(
+    alert(
       "Type de fichier non valide. Seuls les formats JPEG et PNG sont acceptés."
     );
     return;
   }
 
+  // Vérification de la taille du fichier (maximum 4 Mo)
   if (file.size > 4 * 1024 * 1024) {
-    console.error(
+    alert(
       "Le fichier est trop volumineux. Veuillez fournir une image de taille inférieure à 4 Mo."
     );
     return;
   }
 
+  // Création de l'objet FormData pour envoyer les données
   const formData = new FormData();
   formData.append("image", file);
   formData.append("title", title);
   formData.append("category", categoryId); // Récupère dynamiquement l'ID de la catégorie
 
   try {
+    // Envoi de la requête POST pour ajouter le projet
     const response = await fetch(API_URI, {
       method: "POST",
       headers: {
@@ -51,17 +66,21 @@ export const addProject = async (title, categoryId, file) => {
       body: formData,
     });
 
+    // Gestion des erreurs de réponse
     if (!response.ok) {
       const errorData = await response.json();
       console.error("Erreur lors de l'ajout du projet :", errorData);
+      alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
       return null;
     }
 
+    // Si le projet est ajouté avec succès
     const project = await response.json();
     console.log("Projet ajouté avec succès :", project);
     return project;
   } catch (error) {
     console.error("Erreur lors de l'ajout du projet :", error);
+    alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
     return null;
   }
 };

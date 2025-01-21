@@ -1,3 +1,4 @@
+// On importe les fonctions des autres fichiers
 import { deleteProject } from "./deleteProject.js";
 import { addProject } from "./addProject.js";
 
@@ -15,6 +16,7 @@ export const displayGallery = (projects) => {
     ).values(),
   ];
 
+  //-------------------------------------------------------------------------------
   // Si la galerie n'existe pas, on la crée
   if (!gallery) {
     gallery = document.createElement("div");
@@ -36,7 +38,8 @@ export const displayGallery = (projects) => {
     figure.append(imageElement, figCaption);
     gallery.append(figure);
   });
-  // Affichage du titre de la modale et de la bordure bottom
+  // -------------------------------------------------------------------------------
+  // Affichage du titre de la modale et de la bordure noire
   if (modalTitleContainer) {
     const modalTitle = document.createElement("h2");
     modalTitle.classList.add("modal-title");
@@ -47,7 +50,7 @@ export const displayGallery = (projects) => {
 
   modalGallery.style.borderBottom = "1px solid black";
 
-  // Ajout du nouveau titre "ajout photo"
+  // Ajout du nouveau titre en haut de la modale "ajout photo"
   addPhotoButton.addEventListener("click", () => {
     if (modalGallery) {
       modalGallery.innerHTML = "";
@@ -60,11 +63,11 @@ export const displayGallery = (projects) => {
 
       const formContainer = document.createElement("div");
       formContainer.classList.add("form-container");
-
+      // -------------------------------------------------------------------------
       // Création de la zone de sélection et de prévisualisation d'images
       const chooseFileDiv = document.createElement("div");
       chooseFileDiv.classList.add("chooseFile");
-
+      //les balises de l'input
       const imageInput = document.createElement("input");
       imageInput.classList.add("form-image-input");
       imageInput.setAttribute("type", "file");
@@ -99,13 +102,13 @@ export const displayGallery = (projects) => {
           fileReader.readAsDataURL(imageInput.files[0]);
         }
       });
-
       chooseFileDiv.append(customButton, imageInput);
 
       // Paragraphe sous le bouton JPG, PNG : 4 Mo max
       const fileInfoParagraph = document.createElement("p");
       fileInfoParagraph.textContent = "JPG, PNG : 4 Mo max";
       chooseFileDiv.append(fileInfoParagraph);
+      // les champs titre et catégorie
 
       // Formulaire pour le titre
       const titleContainer = document.createElement("div");
@@ -153,45 +156,19 @@ export const displayGallery = (projects) => {
       // Ajouter les éléments dans le conteneur categoryContainer
       categoryContainer.append(categoryLabel, categorySelect, lineDiv);
 
-      // Bouton de soumission de l'ajout des projets
+      // Bouton de soumission de l'ajout des projets Valider
       const submitButton = document.createElement("button");
       submitButton.classList.add("photo-add-project");
       submitButton.textContent = "Valider";
-
+      // Ajouter un projet
       submitButton.addEventListener("click", async (e) => {
         e.preventDefault();
         const title = titleInput.value;
         // Vérification de la validité de la catégorie
         const categoryId = categorySelect.value;
         const image = imageInput.files[0];
-        if (!title) {
-          console.error("Invalid title value");
-          alert(
-            "Veuillez renseigner l'ensemble des champs et renseigner bien le titre et la catégorie."
-          );
-          return;
-        }
-        // Vérifiez que la catégorie est valide
-        const missingFields = [];
-        if (!title) {
-          missingFields.push("le titre");
-        }
-        if (!categoryId) {
-          missingFields.push("la catégorie");
-        }
-        if (!image) {
-          missingFields.push("une image");
-        }
 
-        if (missingFields.length > 0) {
-          alert(
-            `Veuillez renseigner ${missingFields.join(
-              ", "
-            )} pour valider le formulaire.`
-          );
-          return;
-        }
-
+        // ------------------------------------------------------------------------
         // Appel de la fonction addProject avec l'id de la catégorie
         const newProject = await addProject(title, categoryId, image);
 
