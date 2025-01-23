@@ -13,12 +13,18 @@ export const addProject = async (title, categoryId, file) => {
 
   // Vérification que tous les champs sont renseignés
   const missingFields = [];
+  // La méthode push permet d'ajouter un ou plusieurs éléments à la fin d'un tableau.
+  // Dans la cas présent, elle est utilisée pour ajouter les champs manquants dans le
+  // tableau missingFields.
   if (!title) missingFields.push("le titre");
   if (!categoryId) missingFields.push("la catégorie");
   if (!file) missingFields.push("une image");
 
   if (missingFields.length > 0) {
     alert(
+      // La méthode join permet de convertir un tableau en une chaîne de caractères,
+      // en insérant un séparateur entre les éléments. Par défaut, le séparateur est
+      // une virgule (,).
       `Veuillez renseigner ${missingFields.join(
         ", "
       )} pour valider le formulaire.`
@@ -51,9 +57,12 @@ export const addProject = async (title, categoryId, file) => {
   }
 
   // Création de l'objet FormData pour envoyer les données
+  // Il est inutile d'ajouter l'en-tête Content-Type: multipart/form-data
+  // lorsque vous utilisez FormData. Cela sera automatiquement géré pour vous.
   const formData = new FormData();
   formData.append("image", file);
   formData.append("title", title);
+  //--------------clé         valeur----------------
   formData.append("category", categoryId); // Récupère dynamiquement l'ID de la catégorie
 
   try {
@@ -71,7 +80,7 @@ export const addProject = async (title, categoryId, file) => {
       const errorData = await response.json();
       console.error("Erreur lors de l'ajout du projet :", errorData);
       alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
-      return null;
+      return;
     }
 
     // Si le projet est ajouté avec succès
@@ -81,6 +90,7 @@ export const addProject = async (title, categoryId, file) => {
   } catch (error) {
     console.error("Erreur lors de l'ajout du projet :", error);
     alert("Erreur lors de l'ajout du projet. Veuillez réessayer.");
-    return null;
+    return;
+    // échec
   }
 };

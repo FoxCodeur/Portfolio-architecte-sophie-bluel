@@ -9,12 +9,14 @@ export const displayGallery = (projects) => {
   const modalTitleContainer = document.querySelector(".modal-title-container");
   const homepageEditButton = document.querySelector(".homepage-edit-btn");
 
-  // Extraire toutes les catégories uniques
+  // Extraire toutes les catégories uniques ligne 170
   const categories = [
     ...new Map(
+      // Key = id de la catégorie, Value = catégorie
       projects.map((project) => [project.category.id, project.category])
     ).values(),
   ];
+  // on souhaite lier l'id à la catégorie
 
   //-------------------------------------------------------------------------------
   // Si la galerie n'existe pas, on la crée
