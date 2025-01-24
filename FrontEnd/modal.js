@@ -1,15 +1,23 @@
 import { isConnected } from "./sessionManagement.js";
 
-const modal = document.getElementById("modal1");
-const closeModal = document.querySelector(".close-btn");
-const modalLink = document.querySelector(".modal-link");
-
 // Fonction pour initialiser la modale
 export const initializeModal = () => {
+  const modalTitle = document.querySelector(".modal-title"); // Sélectionnez le titre de la modale
+
+  // Vérifiez si l'utilisateur est connecté
   if (!isConnected()) {
-    console.log("Utilisateur non connecté : la modale n'est pas initialisée.");
-    return; // Si l'utilisateur n'est pas connecté, on quitte la fonction sans rien faire
+    console.log("Utilisateur non connecté : masquage du titre de la modale.");
+    modalTitle.classList.add("hidden"); // Masque le titre si non connecté
+    return; // Ne pas aller plus loin si non connecté
   }
+
+  // Initialisation des éléments de la modale uniquement si l'utilisateur est connecté
+  const modal = document.getElementById("modal1");
+  const closeModal = document.querySelector(".close-btn");
+  const modalLink = document.querySelector(".modal-link");
+
+  // Affiche le titre de la modale si l'utilisateur est connecté
+  modalTitle.classList.remove("hidden");
 
   // Fonction pour ouvrir la modale
   const openModal = () => {
@@ -23,7 +31,6 @@ export const initializeModal = () => {
 
   // Événements
   modalLink.addEventListener("click", (e) => {
-    // Cela empêche un comportement de navigation qui pourrait perturber l'ouverture de la modale.
     e.preventDefault();
     openModal();
   });

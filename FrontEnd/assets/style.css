@@ -221,6 +221,9 @@ li:hover {
 		.modal-title {
 			margin-right: 0.62rem; 
 		}
+		.hidden {
+			display: none;
+		}
 
 		.modal-link {
 			font-size: 0.87rem; 

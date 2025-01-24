@@ -1,6 +1,7 @@
 // On importe les fonctions des autres fichiers
 import { deleteProject } from "./deleteProject.js";
 import { addProject } from "./addProject.js";
+import { isConnected } from "./sessionManagement.js";
 
 export const displayGallery = (projects) => {
   let gallery = document.querySelector(".gallery");
