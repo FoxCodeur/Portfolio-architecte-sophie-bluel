@@ -190,6 +190,7 @@ li:hover {
 	margin-bottom: 1.25rem;
 }
 
+
 	.filter-button {
 		padding: 0.62rem 0.93rem;
 		border: #1D6154 solid 1px;
@@ -350,6 +351,9 @@ li:hover {
 				cursor: pointer;
 				border-radius: 3.12rem;
 			}
+			.photo-add-project:active {
+				background: #1D6154; /* Couleur lors du clic */
+			  }
 			
 
 			/* La classe "hidden" permet de masquer un élément */

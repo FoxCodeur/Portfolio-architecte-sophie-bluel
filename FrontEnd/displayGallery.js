@@ -221,13 +221,16 @@ export const displayGallery = (projects) => {
       deleteBtn.innerHTML = `<i class="fa-regular fa-trash-can"></i>`;
 
       deleteBtn.addEventListener("click", async () => {
-        const isDeleted = await deleteProject(project.id, project.title);
-
-        if (isDeleted) {
+        // Appel de la fonction de suppression et suppression du DOM si succès
+        if (await deleteProject(project.id)) {
+          // Retire l'élément de la modale
           modalFigure.remove();
-          console.log(`Le projet "${project.title}" a été supprimé.`);
+          // Retire l'élément de la galerie principale
+          document
+            .querySelector(`.gallery figure img[src="${project.imageUrl}"]`)
+            ?.parentElement?.remove();
         } else {
-          console.log("Erreur lors de la suppression du projet.");
+          console.error("Erreur : impossible de supprimer le projet.");
         }
       });
 

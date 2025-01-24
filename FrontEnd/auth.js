@@ -20,6 +20,8 @@ export const handleAuthClick = (authLink, welcomeMessageElement) => {
     updateAuthButton(authLink);
     if (welcomeMessageElement) {
       welcomeMessageElement.style.display = "none";
+      // Redirection vers la page d'accueil
+      window.location.href = "/index.html"; // La redirection se fait ici
     }
   } else {
     window.location.href = "/login.html";
