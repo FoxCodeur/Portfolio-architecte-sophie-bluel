@@ -177,6 +177,8 @@ export const displayGallery = (projects) => {
         if (newProject) {
           const newFigure = document.createElement("figure");
           const newImage = document.createElement("img");
+          // est utilisée pour créer un URL temporaire permettant d'afficher
+          // l'image sur la page sans avoir besoin de l'envoyer sur un serveur.
           newImage.src = URL.createObjectURL(image);
           newImage.alt = title;
 
